@@ -28,7 +28,33 @@ def start():
      print("-- Connected with " + ip + ":  --" + port)
 
      try:
-         Thread(target = c, args=(connection, ip, port)).start()
+         Thread(target = client, args=(connection, ip, port)).start()
      except socket.error as e:
          print("-- Thread did not start! --" + str(e))
          s.close()
+
+#bagitau player no bape yg dh connect
+def client(c, ip, port):
+   global game
+   player.append(port)
+   print ("Player " + str(len(player_list)) + "port: " + str(port))
+
+   while True:
+      data = c.recv(2048)
+      data = data.decode('utf-8')
+
+
+#kat client tanya nak start game ke tak
+   if (data == "Yes" or 'Y' or 'y' or "yes"):
+	game = [ [0,0,0],
+		 [0,0,0],
+		 [0,0,0] ]
+ 
+   elif (data == "No" or 'N' or 'n' or "no"):
+	break
+
+
+
+if __name__ == "__main__":
+start()
+
