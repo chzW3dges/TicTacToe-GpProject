@@ -72,7 +72,7 @@ def printBoard():
         s += ' '
         for y in range(3):
             if x % 2 == 0:
-                s += ' ' + num2Eng[board[x // 2][j]] + ' '
+                s += ' ' + num2Eng[game[x // 2][j]] + ' '
                 if y == 0 or y == 1: s += '|'
             else:
                 s += '--- '
