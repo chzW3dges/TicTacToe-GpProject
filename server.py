@@ -35,26 +35,56 @@ def start():
 
 #bagitau player no bape yg dh connect
 def client(c, ip, port):
-   global game
+   global game, num2Eng, available
    player.append(port)
    print ("Player " + str(len(player_list)) + "port: " + str(port))
 
-   while True:
-      data = c.recv(2048)
-      data = data.decode('utf-8')
-
 
 #kat client tanya nak start game ke tak
-   if (data == "Yes" or 'Y' or 'y' or "yes"):
-	game = [ [0,0,0],
-		 [0,0,0],
-		 [0,0,0] ]
- 
-   elif (data == "No" or 'N' or 'n' or "no"):
-	break
+   while True:
+        data = c.recv(2048)
+        data = data.decode('utf-8')
+        if not data:
+            print('break')
+            break
+        print("from connected user: " + str(data))
+        if (data == "Yes" or 'Y' or 'y' or "yes"):
+            game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+            num2Eng = {0: ' ', 1: 'O', 4: 'X'}
+            available = [(x, y) for x in range(3) for y in range(3)]
+            startGame(c, ip)
+        elif (data == "No" or 'N' or 'n' or "no"):
+            break
 
+
+#print board
+def printBoard():
+    s = ''
+    for x in range(5):
+        s += ' '
+        for y in range(3):
+            if x % 2 == 0:
+                s += ' ' + num2Eng[board[x // 2][j]] + ' '
+                if y == 0 or y == 1: s += '|'
+            else:
+                s += '--- '
+        s += '\n'
+    return s
+
+#print contoh board nk tunjuk kt player
+def printBnum():
+    s = ''
+    for x in range(5):
+        s += ' '
+        for y in range(3):
+            if x % 2 == 0:
+                s += ' ' + str(((x // 2) * 3) + y + 1) + ' '
+                if y == 0 or y == 1: s += '|'
+            else:
+                s += '--- '
+        s += '\n'
+    return s
 
 
 if __name__ == "__main__":
-start()
-
+    start()
