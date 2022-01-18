@@ -55,7 +55,7 @@ def client(c, ip, port):
         if not data:
             print('break')
             break
-        print("Player " + str(len(player)) + " confirmation: " + str(data))
+        print("Player confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
             game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
             num2Eng = {0: ' ', 1: 'O', 4: 'X'}
@@ -72,7 +72,7 @@ def printBoard():
         s += ' '
         for y in range(3):
             if x % 2 == 0:
-                s += ' ' + num2Eng[game[x // 2][j]] + ' '
+                s += ' ' + num2Eng[game[x // 2][y]] + ' '
                 if y == 0 or y == 1: s += '|'
             else:
                 s += '--- '
@@ -93,9 +93,78 @@ def printBnum():
         s += '\n'
     return s
 
+def checkWin():
+    if len(available) == 0:
+        return "Draw"
+    col = [0, 0, 0]
+    diag = [0, 0]
+    for x in range(3):
+        if sum(game[x]) == 3:
+            return 'O Win!'
+        elif sum(game[x]) == 12:
+            return 'X Win!'
+        for y in range(3):
+            if x == y:
+                diag[0] += game[x][y]
+            if x + y == 2:
+                diag[1] += game[x][y]
+            col[y] += game[x][y]
+    for i in range(3):
+        if col[x] == 3:
+            return 'O Win!'
+        elif col[x] == 12:
+            return 'X Win!'
+    for x in range(2):
+        if diag[x] == 3:
+            return 'O Win!'
+        elif diag[x] == 12:
+            return 'X Win!'
+    return 'No'
 
 
+def playerMove(player, data):
+    x = int(data[0])
+    y = int(data[1])
 
+    if player == 4:
+        print("X at", x, y)
+    else:
+        print("O at", x, y)
+    game[x][y] = player
+    available.pop(available.index((x, y)))
+
+
+def startGame(conn, ip):
+    message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
+    conn.send(message.encode())
+    data = conn.recv(2048).decode()
+    print(ip[0] + " is", data)
+    if data.upper() == 'X':
+        player1 = 4
+        player2 = 1
+    else:
+        player2 = 4
+        player1 = 1
+
+    data = ""
+    while checkWin() == 'No':
+        if (data != 'r'):
+            s = printBoard()
+            conn.send(s.encode())
+        data = conn.recv(2048).decode()
+
+        if data == 'r':
+            conn.send(printBoard().encode())
+            if checkWin() != 'No':
+                break
+        else:
+            data = pointcalc[int(data)]
+            playerMove(player1, data)
+            if checkWin() != 'No':
+                break
+
+    message = printBoard() + '\n\n' + checkWin()
+    conn.send(message.encode())
 
 if __name__ == "__main__":
     start()
