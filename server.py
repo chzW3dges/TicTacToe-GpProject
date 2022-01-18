@@ -2,17 +2,6 @@ import socket
 import sys
 from threading import Thread
 
-#sini letak board fx
-#game = [[0, 0, 0],
-#         [0, 0, 0],
-#         [0, 0, 0]]
-#num2Eng = {0: ' ', 1: 'O', 4: 'X'}
-#available = [(x, y) for x in range(3) for y in range(3)]
-#recv x or o
-#pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
-#player = []
-
-
 #socket fx
 def start():
    port = 8888
@@ -50,7 +39,6 @@ available = [(x, y) for x in range(3) for y in range(3)]
 #recv x or o
 pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
 player = []
-
 
 
 #bagitau player no bape yg dh connect
@@ -104,6 +92,9 @@ def printBnum():
                 s += '--- '
         s += '\n'
     return s
+
+
+
 
 
 if __name__ == "__main__":
