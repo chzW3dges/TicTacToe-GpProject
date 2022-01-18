@@ -3,6 +3,14 @@ import sys
 from threading import Thread
 
 #sini letak board fx
+#game = [[0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0]]
+#num2Eng = {0: ' ', 1: 'O', 4: 'X'}
+#available = [(x, y) for x in range(3) for y in range(3)]
+#recv x or o
+#pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
+#player = []
 
 
 #socket fx
@@ -33,11 +41,23 @@ def start():
          print("-- Thread did not start! --" + str(e))
          s.close()
 
+#sini letak board fx
+game = [[0, 0, 0],
+         [0, 0, 0],
+         [0, 0, 0]]
+num2Eng = {0: ' ', 1: 'O', 4: 'X'}
+available = [(x, y) for x in range(3) for y in range(3)]
+#recv x or o
+pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
+player = []
+
+
+
 #bagitau player no bape yg dh connect
 def client(c, ip, port):
    global game, num2Eng, available
    player.append(port)
-   print ("Player " + str(len(player_list)) + "port: " + str(port))
+   print ("Player " + str(len(player)) + " port: " + str(port))
 
 
 #kat client tanya nak start game ke tak
@@ -47,7 +67,7 @@ def client(c, ip, port):
         if not data:
             print('break')
             break
-        print("from connected user: " + str(data))
+        print("Player " + str(len(player)) + " confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
             game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
             num2Eng = {0: ' ', 1: 'O', 4: 'X'}
