@@ -3,7 +3,7 @@ import sys
 import os
 
 Client = socket.socket()
-host = '192.168.56.102'
+host = '192.168.56.104'
 port = 8888
 os.system('clear')
 
