@@ -25,7 +25,7 @@ while True:
 
 while response.upper() != 'NO' or response.upper() != 'N':
     Client.send(response.encode())
-    data = Client.recv(1024).decode()
+    data = Client.recv(2048).decode()
     while True:
         print("\n" + data)
         player = input()
@@ -33,7 +33,7 @@ while response.upper() != 'NO' or response.upper() != 'N':
             break
         print('\nPlease enter either O or X!')
     Client.send(player.encode())
-    data = Client.recv(1024).decode()
+    data = Client.recv(2048).decode()
     while "Win" not in data:
         print("\nBoard:\n" + data)
         while True:
@@ -41,7 +41,7 @@ while response.upper() != 'NO' or response.upper() != 'N':
             if response in [str(i+1) for i in range(9)] + ['r']:
                 break
         Client.send(response.encode())
-        data = Client.recv(1024).decode()
+        data = Client.recv(2048).decode()
     print("\nGame Over.")
     print(data)
 
