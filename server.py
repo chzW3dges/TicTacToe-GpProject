@@ -153,12 +153,12 @@ def startGame(conn, ip):
 
     data = ""
     while checkWin() == 'No':
-        if (data != 'r'):
+        if (data != 'c'):
             s = printBoard()
             conn.send(s.encode())
         data = conn.recv(1024).decode()
 
-        if data == 'r':
+        if data == 'c':
             conn.send(printBoard().encode())
             if checkWin() != 'No':
                 break

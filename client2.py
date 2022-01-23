@@ -44,6 +44,10 @@ while response.upper() != 'NO' or response.upper() != 'N':
     
     #Ask client to place X and O on the board
     while "Win" not in data:
+        print("\nBoard:\n" + data)
+        response = input('Player 1 turn. Enter (c) to display board \n')
+        Client.send(response.encode())
+        data = Client.recv(1024).decode()
         print("\n-------------------------------------------------------")
         print("\nBoard:\n" + data)
         if "Win" in data:
@@ -55,11 +59,8 @@ while response.upper() != 'NO' or response.upper() != 'N':
         Client.send(response.encode())
         data = Client.recv(1024).decode()
         if "Win" in data:
-            break
-        print("\nBoard:\n" + data)
-        response = input('Player 2 turn. Enter (c) to display board \n')
-        Client.send(response.encode())
-        data = Client.recv(1024).decode()
+           break
+        
     print("\nGame Over.")
     print(data)
 
