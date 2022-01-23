@@ -46,11 +46,13 @@ while response.upper() != 'NO' or response.upper() != 'N':
     while "Win" not in data:
         print("\nBoard:\n" + data)
         while True:
-            response = input('Your turn. \nEnter number 1-9 to choose your position [(r) - display board]\n')
-            if response in [str(i+1) for i in range(9)] + ['r']:
+            response = input('Your turn. \nEnter number 1-9 to choose your position [(c) - display board]\n')
+            if response in [str(i+1) for i in range(9)] + ['c']:
                 break
         Client.send(response.encode())
         data = Client.recv(1024).decode()
+        if data == "Win"
+            break
     print("\nGame Over.")
     print(data)
 
