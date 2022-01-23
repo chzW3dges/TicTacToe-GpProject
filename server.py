@@ -53,7 +53,7 @@ def client(c, ip, port):
         data = c.recv(2048)
         data = data.decode('utf-8')
         if not data:
-            print('break')
+            print("Player has been disconnected")
             break
         print("Player confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
@@ -142,7 +142,7 @@ def playerMove(player, data):
 def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
-    data = conn.recv(2048).decode()
+    data = conn.recv(1024).decode()
     print(ip[0] + " is", data)
     if data.upper() == 'X':
         player1 = 4

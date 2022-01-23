@@ -3,7 +3,7 @@ import sys
 import os
 
 Client = socket.socket()
-host = '192.168.56.104'
+host = '192.168.56.102'
 port = 8888
 os.system('clear')
 
@@ -18,10 +18,16 @@ except socket.error as e:
 print("\n=================================================")
 print("\n                 TIC - TAC - TOE")
 print("\n=================================================")
+
+#Ask client 
 while True:
     response = input('\nWould you like to start the game?[Yes/No]: ')
-    if response.upper() in ('YES','N0','Y','N'):
+    if response.upper() in ('YES','Y'):
         break
+        
+    if response.upper() in ('N0','N'):
+        Client.close()
+        sys.exit()
 
 while response.upper() != 'NO' or response.upper() != 'N':
     Client.send(response.encode())
