@@ -3,7 +3,7 @@ import sys
 import os
 
 Client = socket.socket()
-host = '192.168.56.104'
+host = '192.168.56.102'
 port = 8888
 os.system('clear')
 
@@ -18,11 +18,18 @@ except socket.error as e:
 print("\n=================================================")
 print("\n                 TIC - TAC - TOE")
 print("\n=================================================")
+
+#Ask client if they want to start the game
 while True:
     response = input('\nWould you like to start the game?[Yes/No]: ')
-    if response.upper() in ('YES','N0','Y','N'):
+    if response.upper() in ('YES','Y'):
         break
+        
+    if response.upper() in ('N0','N'):
+        Client.close()
+        sys.exit()
 
+#Ask client to choose between X or O!
 while response.upper() != 'NO' or response.upper() != 'N':
     Client.send(response.encode())
     data = Client.recv(1024).decode()
@@ -34,10 +41,15 @@ while response.upper() != 'NO' or response.upper() != 'N':
         print('\nPlease enter either O or X!')
     Client.send(player.encode())
     data = Client.recv(1024).decode()
+<<<<<<< HEAD
+=======
+    
+    #Ask client to place X and O on the board
+>>>>>>> 50daf79f8998b743b19319af892e1e9a192669a7
     while "Win" not in data:
         print("\nBoard:\n" + data)
         while True:
-            response = input('Enter number 1-9 to choose your position [(r) - display board]\n')
+            response = input('Your turn. \nEnter number 1-9 to choose your position [(r) - display board]\n')
             if response in [str(i+1) for i in range(9)] + ['r']:
                 break
         Client.send(response.encode())
@@ -45,6 +57,7 @@ while response.upper() != 'NO' or response.upper() != 'N':
     print("\nGame Over.")
     print(data)
 
+    #Ask client whether they want to play again
     print("\n=================================================")
     response = input("Would you like to play again?[Yes/No]: ")
     if response.upper() == "NO" or response.upper() == 'N':

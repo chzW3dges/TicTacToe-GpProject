@@ -17,7 +17,7 @@ def start():
      sys.exit()
 
    print("Listening from clients...")
-   s.listen(3)
+   s.listen(3)   # listen from client 
 
    while True:
      connection, address = s.accept()
@@ -41,19 +41,19 @@ pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
 player = []
 
 
-#bagitau player no bape yg dh connect
+#bagitau player no bape yg dh connect #function for client
 def client(c, ip, port):
    global game, num2Eng, available
    player.append(port)
    print ("Player " + str(len(player)) + " port: " + str(port))
 
 
-#kat client tanya nak start game ke tak
+#kat client tanya nak start game ke tak? 
    while True:
         data = c.recv(1024)
         data = data.decode('utf-8')
         if not data:
-            print("Player has been disconnected")
+            print('break')
             break
         print("Player confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
@@ -65,7 +65,7 @@ def client(c, ip, port):
             break
 
 
-#print board
+#print board 
 def printBoard():
     s = ''
     for x in range(5):
@@ -79,7 +79,7 @@ def printBoard():
         s += '\n'
     return s
 
-#print contoh board nk tunjuk kt player
+#print contoh board nk tunjuk kt player or user 
 def printBnum():
     s = ''
     for x in range(5):
@@ -93,7 +93,7 @@ def printBnum():
         s += '\n'
     return s
 
-def checkWin():
+def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
     if len(available) == 0:
         return "Draw"
     col = [0, 0, 0]
@@ -122,7 +122,9 @@ def checkWin():
     return 'No'
 
 
-def playerMove(player, data):
+
+#function player buat move yg mana
+def playerMove(player, data):   
     x = int(data[0])
     y = int(data[1])
 
@@ -134,10 +136,13 @@ def playerMove(player, data):
     available.pop(available.index((x, y)))
 
 
-def startGame(conn, ip):
+
+
+#funtion bila start game
+def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
-    data = conn.recv(1024).decode()
+    data = conn.recv(2048).decode()
     print(ip[0] + " is", data)
     if data.upper() == 'X':
         player1 = 4
