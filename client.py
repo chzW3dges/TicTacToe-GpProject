@@ -25,7 +25,7 @@ while True:
     if response.upper() in ('YES','Y'):
         break
         
-    if response.upper() in ('N0','N'):
+    if response.upper() in ('NO,'N'):
         Client.close()
         sys.exit()
 
@@ -51,7 +51,7 @@ while response.upper() != 'NO' or response.upper() != 'N':
                 break
         Client.send(response.encode())
         data = Client.recv(1024).decode()
-        if data == "Win"
+        if data == "Win":
             break
     print("\nGame Over.")
     print(data)
