@@ -30,7 +30,7 @@ def start():
          print("-- Thread did not start! --" + str(e))
          s.close()
 
-#sini letak board fx
+#this is board fx
 game = [[0, 0, 0],
          [0, 0, 0],
          [0, 0, 0]]
@@ -41,14 +41,15 @@ pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
 player = []
 
 
-#bagitau player no bape yg dh connect #function for client
+
+#function for client
 def client(c, ip, port):
    global game, num2Eng, available
    player.append(port)
    print ("Player " + str(len(player)) + " port: " + str(port))
 
 
-#kat client tanya nak start game ke tak? 
+#for client to ask whether to start the game or not? 
    while True:
         data = c.recv(2048)
         data = data.decode('utf-8')
@@ -79,7 +80,7 @@ def printBoard():
         s += '\n'
     return s
 
-#print contoh board nk tunjuk kt player or user 
+#print the board to show to the player or user 
 def printBnum():
     s = ''
     for x in range(5):
@@ -93,7 +94,9 @@ def printBnum():
         s += '\n'
     return s
 
-def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
+
+#function ambik kira how to win!!
+def checkWin():   
     if len(available) == 0:
         return "Draw"
     col = [0, 0, 0]
@@ -123,7 +126,7 @@ def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
 
 
 
-#function player buat move yg mana
+#function player make a move
 def playerMove(player, data):   
     x = int(data[0])
     y = int(data[1])
@@ -138,7 +141,7 @@ def playerMove(player, data):
 
 
 
-#funtion bila start game
+#funtion when start the game
 def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
