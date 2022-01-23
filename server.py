@@ -141,7 +141,7 @@ def playerMove(player, data):
 
 
 
-#funtion when start the game
+#function when start the game
 def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
