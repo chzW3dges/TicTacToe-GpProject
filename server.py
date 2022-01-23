@@ -1,11 +1,11 @@
 import socket
 import sys
 from threading import Thread
+#import random 
 
-#socket fx
+#socket function
 def start():
    port = 8888
-
    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
    print("\n||||||              Welcome to the Server            ||||||\n")
@@ -30,30 +30,30 @@ def start():
          print("-- Thread did not start! --" + str(e))
          s.close()
 
-#sini letak board fx
+#board array
 game = [[0, 0, 0],
          [0, 0, 0],
          [0, 0, 0]]
 num2Eng = {0: ' ', 1: 'O', 4: 'X'}
 available = [(x, y) for x in range(3) for y in range(3)]
-#recv x or o
 pointcalc = {(x * 3) + y + 1: (x, y) for x in range(3) for y in range(3)}
 player = []
 
 
-#bagitau player no bape yg dh connect #function for client
+
+#function for client
 def client(c, ip, port):
    global game, num2Eng, available
    player.append(port)
    print ("Player " + str(len(player)) + " port: " + str(port))
 
 
-#kat client tanya nak start game ke tak? 
+#Get confirmation from player to start the game
    while True:
         data = c.recv(1024)
         data = data.decode('utf-8')
         if not data:
-            print('break')
+            print("The player has been disconnected!!")
             break
         print("Player confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
@@ -65,21 +65,24 @@ def client(c, ip, port):
             break
 
 
+#def get_random_first_player():
+#        return random.randint(0, 1)
+
 #print board 
 def printBoard():
     s = ''
     for x in range(5):
-        s += ' '
-        for y in range(3):
-            if x % 2 == 0:
-                s += ' ' + num2Eng[game[x // 2][y]] + ' '
-                if y == 0 or y == 1: s += '|'
-            else:
-                s += '--- '
-        s += '\n'
+            s += ' '
+            for y in range(3):
+                if x % 2 == 0:
+                    s += ' ' + num2Eng[game[x // 2][y]] + ' '
+                    if y == 0 or y == 1: s += '|'
+                else:
+                    s += '--- '
+            s += '\n'
     return s
 
-#print contoh board nk tunjuk kt player or user 
+#print the board that contain numbers to display to the player
 def printBnum():
     s = ''
     for x in range(5):
@@ -93,7 +96,9 @@ def printBnum():
         s += '\n'
     return s
 
-def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
+
+#function to check the winner
+def checkWin():   
     if len(available) == 0:
         return "Draw"
     col = [0, 0, 0]
@@ -123,7 +128,7 @@ def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
 
 
 
-#function player buat move yg mana
+#function player make a move
 def playerMove(player, data):   
     x = int(data[0])
     y = int(data[1])
@@ -138,11 +143,11 @@ def playerMove(player, data):
 
 
 
-#funtion bila start game
+#function when start the game
 def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
-    data = conn.recv(2048).decode()
+    data = conn.recv(1024).decode()
     print(ip[0] + " is", data)
     if data.upper() == 'X':
         player1 = 4
