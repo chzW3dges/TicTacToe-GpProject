@@ -50,7 +50,7 @@ def client(c, ip, port):
 
 #kat client tanya nak start game ke tak? 
    while True:
-        data = c.recv(2048)
+        data = c.recv(1024)
         data = data.decode('utf-8')
         if not data:
             print('break')
@@ -156,7 +156,7 @@ def startGame(conn, ip):
         if (data != 'r'):
             s = printBoard()
             conn.send(s.encode())
-        data = conn.recv(2048).decode()
+        data = conn.recv(1024).decode()
 
         if data == 'r':
             conn.send(printBoard().encode())

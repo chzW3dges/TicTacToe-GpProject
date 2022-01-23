@@ -41,8 +41,11 @@ while response.upper() != 'NO' or response.upper() != 'N':
         print('\nPlease enter either O or X!')
     Client.send(player.encode())
     data = Client.recv(1024).decode()
+<<<<<<< HEAD
+=======
     
     #Ask client to place X and O on the board
+>>>>>>> 50daf79f8998b743b19319af892e1e9a192669a7
     while "Win" not in data:
         print("\nBoard:\n" + data)
         while True:
