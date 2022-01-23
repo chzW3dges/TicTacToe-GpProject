@@ -48,12 +48,12 @@ def client(c, ip, port):
    print ("Player " + str(len(player)) + " port: " + str(port))
 
 
-#kat client tanya nak start game ke tak
+#kat client tanya nak start game ke tak? 
    while True:
         data = c.recv(2048)
         data = data.decode('utf-8')
         if not data:
-            print("Player has been disconnected")
+            print('break')
             break
         print("Player confirmation: " + str(data))
         if (data == "Yes" or 'Y' or 'y' or "yes"):
@@ -79,7 +79,7 @@ def printBoard():
         s += '\n'
     return s
 
-#print contoh board nk tunjuk kt player
+#print contoh board nk tunjuk kt player or user 
 def printBnum():
     s = ''
     for x in range(5):
@@ -93,7 +93,7 @@ def printBnum():
         s += '\n'
     return s
 
-def checkWin():   #function ambik kira mcm mana and mcm mana dia menang
+def checkWin():   #function ambik kira mcm mana and mcm mana dia menang!!
     if len(available) == 0:
         return "Draw"
     col = [0, 0, 0]
@@ -142,7 +142,7 @@ def playerMove(player, data):
 def startGame(conn, ip):   
     message = printBnum() + "\n\nDo you want to be O or X? [O/X]: "
     conn.send(message.encode())
-    data = conn.recv(1024).decode()
+    data = conn.recv(2048).decode()
     print(ip[0] + " is", data)
     if data.upper() == 'X':
         player1 = 4
