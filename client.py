@@ -29,7 +29,7 @@ while True:
         Client.close()
         sys.exit()
 
-#Ask client to choose between X or )!
+#Ask client to choose between X or O!
 while response.upper() != 'NO' or response.upper() != 'N':
     Client.send(response.encode())
     data = Client.recv(1024).decode()
